@@ -4,9 +4,12 @@ RUN git clone https://github.com/FranciscoCasais/ci-cd-casais-esparrach-FRONT.gi
     git checkout hello-world && \
     cd hello-world && \
     npm install && \
+    npm fund && \
     export NG_CLI_ANALYTICS=false && \
     npm run build
 
-# FROM nginx AS run
-# COPY --from=build ci-cd-casais-esparrach-FRONT/hello-world/dist/ /dist/
-# COPY default.conf /etc/nginx/conf.d/
+FROM nginx:alpine AS run
+RUN rm /usr/share/nginx/html/index.html
+RUN rm /etc/nginx/conf.d/default.conf
+COPY --from=build ci-cd-casais-esparrach-FRONT/hello-world/dist/ usr/share/nginx/html/dist/hello-world/browser/
+COPY default.conf /etc/nginx/conf.d/
