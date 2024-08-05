@@ -11,5 +11,5 @@ RUN git clone https://github.com/FranciscoCasais/ci-cd-casais-esparrach-FRONT.gi
 FROM nginx:alpine AS run
 RUN rm /usr/share/nginx/html/index.html
 RUN rm /etc/nginx/conf.d/default.conf
-COPY --from=build ci-cd-casais-esparrach-FRONT/hello-world/dist/ usr/share/nginx/html/dist/hello-world/browser/
+COPY --from=build ci-cd-casais-esparrach-FRONT/hello-world/dist/ /usr/share/nginx/html/
 COPY default.conf /etc/nginx/conf.d/
