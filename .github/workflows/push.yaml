@@ -1,4 +1,4 @@
-name: CI/CD para pull/merge requests
+name: CI/CD al cerrar pull/merge requests
 
 on: pull_request
   branches:
@@ -6,29 +6,12 @@ on: pull_request
     - main
     - qa
 
+env:
+  REGISTRY: ghcr.io
+  IMAGE_NAME: FranciscoCasais/ci-cd-FRONT/nginx
 
 jobs:
-  pre-merge:
-    runs-on: ubuntu-latest
-
-    steps:
-      - name: Clonar repositorio
-        uses: actions/checkout@v2
-
-      - name: Instalar Node.js
-        uses: actions/setup-node@v2
-        with:
-          node-version: '14'
-
-      - name: Instalar dependencias
-        run: npm install
-
-      - name: Testear Angular
-        run: ng test
-
-
   post-merge:
-    if: github.event.pull_request.merged == true
     runs-on: ubuntu-latest
 
     steps:
@@ -41,7 +24,7 @@ jobs:
       - name: Iniciar sesión en GitHub Packages
         uses: docker/login-action@v2
         with:
-          registry: ghcr.io
+          registry: ${{ env.REGISTRY }}
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
 
@@ -50,4 +33,4 @@ jobs:
         with:
           context: .
           push: true
-          tags: tags: ghcr.io/${{ github.repository }}/angular-hello-world:latest
+          tags: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:latest
