@@ -1,0 +1,53 @@
+name: CI/CD para pull/merge requests
+
+on: pull_request
+  branches:
+    - dev
+    - main
+    - qa
+
+
+jobs:
+  pre-merge:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Clonar repositorio
+        uses: actions/checkout@v2
+
+      - name: Instalar Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: '14'
+
+      - name: Instalar dependencias
+        run: npm install
+
+      - name: Testear Angular
+        run: ng test
+
+
+  post-merge:
+    if: github.event.pull_request.merged == true
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Clonar repositorio
+        uses: actions/checkout@v2
+
+      - name: Instalar Docker Buildx
+        uses: docker/setup-buildx-action@v2
+
+      - name: Iniciar sesión en GitHub Packages
+        uses: docker/login-action@v2
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Buildear y subir la imagen Docker
+        uses: docker/build-push-action@v2
+        with:
+          context: ../../
+          push: true
+          tags: tags: ghcr.io/${{ github.repository }}/angular-hello-world:latest
