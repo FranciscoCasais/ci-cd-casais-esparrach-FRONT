@@ -48,6 +48,6 @@ jobs:
       - name: Buildear y subir la imagen Docker
         uses: docker/build-push-action@v2
         with:
-          context: ../../
+          context: .
           push: true
           tags: tags: ghcr.io/${{ github.repository }}/angular-hello-world:latest
