@@ -28,5 +28,4 @@ jobs:
         run: npm install -g @angular/cli
 
       - name: Testear Angular
-        run: ng test
-
+        run: ng test --browsers ChromeHeadless
