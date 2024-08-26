@@ -1,14 +1,15 @@
 name: CI/CD al cerrar pull/merge requests
 
-on: pull_request
-  branches:
-    - dev
-    - main
-    - qa
+on:
+  push:
+    branches:
+      - dev
+      - main
+      - qa
 
 env:
   REGISTRY: ghcr.io
-  IMAGE_NAME: FranciscoCasais/ci-cd-FRONT/nginx
+  IMAGE_NAME: angular-hello-world
 
 jobs:
   post-merge:
