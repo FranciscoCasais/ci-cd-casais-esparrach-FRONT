@@ -1,10 +1,11 @@
 name: CI/CD al cerrar pull/merge requests
 
-on: push
-  branches:
-    - dev
-    - main
-    - qa
+on:
+  push
+    branches:
+      - dev
+      - main
+      - qa
 
 env:
   REGISTRY: ghcr.io

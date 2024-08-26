@@ -1,10 +1,11 @@
 name: CI/CD al abrir pull/merge requests
 
-on: pull_request
-  branches:
-    - dev
-    - main
-    - qa
+on:
+  pull_request
+    branches:
+      - dev
+      - main
+      - qa
     
 jobs:
   pre-merge:
