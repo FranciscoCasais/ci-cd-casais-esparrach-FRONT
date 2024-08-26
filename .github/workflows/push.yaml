@@ -1,7 +1,7 @@
 name: CI/CD al cerrar pull/merge requests
 
 on:
-  push
+  push:
     branches:
       - dev
       - main
