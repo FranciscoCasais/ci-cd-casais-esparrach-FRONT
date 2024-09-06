@@ -1,0 +1,31 @@
+name: CI/CD al abrir pull/merge requests
+
+on:
+  pull_request:
+    branches:
+      - dev
+      - main
+      - qa
+    
+jobs:
+  pre-merge:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Clonar repositorio
+        uses: actions/checkout@v2
+
+      - name: Instalar Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+          check-latest: true
+
+      - name: Instalar dependencias
+        run: npm install
+        
+      - name: Instalar Angular
+        run: npm install -g @angular/cli
+
+      - name: Testear Angular
+        run: ng test --browsers ChromeHeadless --watch=false
