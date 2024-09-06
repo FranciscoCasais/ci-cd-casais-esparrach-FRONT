@@ -1,7 +1,7 @@
 FROM node:lts AS build
 RUN git clone https://github.com/FranciscoCasais/ci-cd-casais-esparrach-FRONT.git && \
     cd ci-cd-casais-esparrach-FRONT && \
-    git checkout dev && \
+    git checkout qa && \
     npm install && \
     npm fund && \
     export NG_CLI_ANALYTICS=false && \
